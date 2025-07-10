@@ -2,10 +2,17 @@ import React from "react";
 import Lottie from "lottie-react";
 import loginJsonData from "../assets/login.json";
 import { Link } from "react-router-dom";
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import { Mail, Lock } from "lucide-react";
 import { useForm } from "react-hook-form";
-
+import useAuth from "../hook/useAuth";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase/firebase";
 const Login = () => {
+  const navigate = useNavigate();
+  const { SignIn,setUser } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -13,9 +20,28 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Form submitted:", data);
+    SignIn(data.email, data.password)
+      .then((res) => {
+        toast.success("Login Successful");
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+    // console.log("Form submitted:", data);
   };
-
+  const provider = new GoogleAuthProvider();
+  const SignInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        setUser(result.user);
+        toast.success("User login successful!");
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error("Google Sign-in failed.");
+      });
+  };
   return (
     <div className="flex items-center justify-evenly px-10 pt-5 pb-10">
       <div>
@@ -101,7 +127,7 @@ const Login = () => {
           >
             Login
           </button>
-          <button className="py-2 px-4 flex items-center bg-gray-100 hover:bg-blue-200 duration-200 text-gray-600 ring-1 ring-gray-400 shadow-md justify-center rounded-lg font-semibold w-full text-lg cursor-pointer mt-3">
+          <button type="button" onClick={SignInWithGoogle} className="py-2 px-4 flex items-center bg-gray-100 hover:bg-blue-200 duration-200 text-gray-600 ring-1 ring-gray-400 shadow-md justify-center rounded-lg font-semibold w-full text-lg cursor-pointer mt-3">
             <img src="google.png" className="w-10 mr-2" alt="Google logo" />
             <div>Continue with Google</div>
           </button>

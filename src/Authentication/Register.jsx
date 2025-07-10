@@ -1,19 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import Lottie from "lottie-react";
 import loginJsonData from "../assets/login.json";
 import { Link } from "react-router-dom";
 import { Mail, Lock, User } from "lucide-react";
 import { useForm } from "react-hook-form";
-
+import useAuth from "../hook/useAuth";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
 const Register = () => {
+  const [imageFile, setImageFile] = useState(null);
+  const { createUser, user, updateUser, setUser } = useAuth();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form submitted:", data);
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+  const onSubmit = async (data) => {
+    if (!imageFile) {
+      toast.error("Please select a profile photo.");
+      return;
+    }
+
+    const uploadToImgbb = async () => {
+      const apiKey = import.meta.env.VITE_IMGBB_API;
+      const formData = new FormData();
+      formData.append("image", imageFile);
+      try {
+        const res = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${apiKey}`,
+          formData
+        );
+        return res.data.data.url;
+      } catch (error) {
+        console.error("Imgbb Upload Error:", error);
+      }
+    };
+
+    const imageUrl = await uploadToImgbb();
+    if (!imageUrl) {
+      toast.error("Image upload failed!");
+      return;
+    }
+
+    createUser(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        return updateUser({ displayName: data.name, photoURL: imageUrl })
+          .then(() => {
+            setUser({ ...user, displayName: data.name, photoURL: imageUrl });
+          })
+          .catch(() => {
+            setUser(user);
+          });
+      })
+      .then(() => {
+        toast.success("Account Sign up Successful");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error("Signup error:", err);
+        toast.error("Account creation failed!");
+      });
+    axios.post("http://localhost:3000/api/users", {
+      name: data.displayName,
+      photo: imageUrl,
+      role: "user",
+      experience: null,
+      socials: null,
+      availableSlots: null,
+    });
   };
 
   return (
@@ -84,7 +146,7 @@ const Register = () => {
           <div className="flex flex-col gap-2 mt-3">
             <label htmlFor="photo">Profile Photo</label>
             <input
-              {...register("photo", { required: "Profile photo is required" })}
+              onChange={handleFileChange}
               type="file"
               id="photo"
               accept="image/*"
@@ -145,5 +207,4 @@ const Register = () => {
     </div>
   );
 };
-
 export default Register;
