@@ -11,10 +11,12 @@ import {
   FaClock,
   FaInfoCircle,
   FaPaperPlane,
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
 } from "react-icons/fa";
 import useAuth from "../hook/useAuth";
 
-// Constant Options
 const dayOptions = [
   { value: "Sunday", label: "Sunday" },
   { value: "Monday", label: "Monday" },
@@ -35,6 +37,7 @@ const skillOptions = ["Yoga", "CrossFit", "Cardio", "Strength", "Zumba"];
 
 const BecomeTrainer = () => {
   const { user } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -44,26 +47,52 @@ const BecomeTrainer = () => {
   } = useForm({
     defaultValues: {
       name: "",
-      email: user.email,
+      email: user?.email,
       age: "",
-      profileImage: user.photoURL,
+      profileImage: user?.photoURL || "",
       skills: [],
       availableDays: [],
-      availableTime: null,
+      availableSlots: [],
       otherInfo: "",
+      facebook: "",
+      instagram: "",
+      linkedin: "",
     },
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
-    axios.post("http://localhost:3000/api/pendingtrainer", data).then((res) => {
+    const formattedData = {
+      ...data,
+      role: "trainer",
+      availableDays: data.availableDays.map((day) => day.value),
+      availableSlots: data.availableSlots.map((time) => time.value),
+      socials: {
+        facebook: data.facebook,
+        instagram: data.instagram,
+        linkedin: data.linkedin,
+      },
+    };
+
+    delete formattedData.facebook;
+    delete formattedData.instagram;
+    delete formattedData.linkedin;
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/pendingtrainer",
+        formattedData
+      );
+
       if (res.status === 200) {
         toast.success("Trainer Application Submitted Successfully");
         reset();
       } else {
         toast.error("Something went wrong");
       }
-    });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to submit trainer application");
+    }
   };
 
   return (
@@ -77,6 +106,7 @@ const BecomeTrainer = () => {
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Full Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Full Name
@@ -95,6 +125,8 @@ const BecomeTrainer = () => {
               </span>
             )}
           </div>
+
+          {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Email
@@ -108,6 +140,8 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
+
+          {/* Age */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Age
@@ -125,6 +159,8 @@ const BecomeTrainer = () => {
               <span className="text-red-500 text-xs">Age is required</span>
             )}
           </div>
+
+          {/* Profile Image */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Profile Image URL
@@ -139,6 +175,24 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
+
+          {/* Experience */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Years of Experience
+            </label>
+            <div className="flex items-center border border-gray-300 rounded-md px-3 py-3">
+              <FaClock className="text-gray-400 mr-2" />
+              <input
+                {...register("experience")}
+                type="number"
+                placeholder="Enter years of experience"
+                className="w-full outline-none text-sm"
+              />
+            </div>
+          </div>
+
+          {/* Skills */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Skills
@@ -156,6 +210,8 @@ const BecomeTrainer = () => {
               ))}
             </div>
           </div>
+
+          {/* Available Days */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Available Days
@@ -169,18 +225,19 @@ const BecomeTrainer = () => {
                   options={dayOptions}
                   isMulti
                   closeMenuOnSelect={false}
-                  isSearchable={false}
                   placeholder="Select available days"
                 />
               )}
             />
           </div>
+
+          {/* Available Time */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Available Time
             </label>
             <Controller
-              name="availableTime"
+              name="availableSlots"
               control={control}
               render={({ field }) => (
                 <Select
@@ -188,12 +245,13 @@ const BecomeTrainer = () => {
                   options={timeOptions}
                   isMulti
                   closeMenuOnSelect={false}
-                  isSearchable={false}
-                  placeholder="Select available days"
+                  placeholder="Select available time"
                 />
               )}
             />
           </div>
+
+          {/* Other Info */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Other Info
@@ -208,6 +266,56 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
+
+          {/* Facebook */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Facebook
+            </label>
+            <div className="flex items-center border border-gray-300 rounded-md px-3 py-3">
+              <FaFacebook className="text-gray-400 mr-2" />
+              <input
+                {...register("facebook")}
+                type="text"
+                placeholder="Enter your Facebook URL"
+                className="w-full outline-none text-sm"
+              />
+            </div>
+          </div>
+
+          {/* Instagram */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Instagram
+            </label>
+            <div className="flex items-center border border-gray-300 rounded-md px-3 py-3">
+              <FaInstagram className="text-gray-400 mr-2" />
+              <input
+                {...register("instagram")}
+                type="text"
+                placeholder="Enter your Instagram URL"
+                className="w-full outline-none text-sm"
+              />
+            </div>
+          </div>
+
+          {/* LinkedIn */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              LinkedIn
+            </label>
+            <div className="flex items-center border border-gray-300 rounded-md px-3 py-3">
+              <FaLinkedin className="text-gray-400 mr-2" />
+              <input
+                {...register("linkedin")}
+                type="text"
+                placeholder="Enter your LinkedIn URL"
+                className="w-full outline-none text-sm"
+              />
+            </div>
+          </div>
+
+          {/* Submit */}
           <div className="text-right pt-2">
             <button
               type="submit"

@@ -10,6 +10,9 @@ import TrainerBookedPage from "../components/TrainerBookedPage";
 import BecomeTrainer from "../components/BecomeTrainer";
 import Dashboard from "../Dashboard/Dashboard";
 import AppliedTrainers from "../Dashboard/AppliedTrainers";
+import AdminRoute from "./AdminRoute";
+import AllUsers from "../Dashboard/AllUsers";
+import AllTrainers from "../Dashboard/AllTrainers";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -66,11 +69,32 @@ export const router = createBrowserRouter([
         path: "/dashboard/applied-trainers",
         element: (
           <PrivateRoute>
-            <AppliedTrainers />
+            <AdminRoute>
+              <AppliedTrainers />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
-    ]
+      {
+        path: "/dashboard/all-users",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-trainers",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllTrainers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
-
 ]);

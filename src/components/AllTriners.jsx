@@ -19,10 +19,16 @@ const fetchTrainers = async () => {
 const AllTriners = () => {
   const navigate = useNavigate();
 
-  const { data: trainers = [], isLoading, isError } = useQuery({
+  const { data: users = [], isLoading, isError } = useQuery({
     queryKey: ["allTrainers"],
     queryFn: fetchTrainers,
   });
+
+  const trainers = users.filter((t) => t.role === "trainer");
+
+  const handleBecomeTrainer = () => {
+    navigate("/become-trainer");
+  };
 
   if (isLoading)
     return (
@@ -48,10 +54,26 @@ const AllTriners = () => {
         well-being. Choose the right coach for your journey.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-5 px-6">
-        {trainers
-          .filter((t) => t.role === "trainer")
-          .map((trainer) => (
+      {trainers.length === 0 ? (
+        <div className="mt-10">
+          <div className="bg-blue-400 text-white p-6 rounded-xl mb-8 text-center">
+            <h2 className="text-2xl font-bold mb-2">
+              Trainer not found ready to Share Your Expertise?
+            </h2>
+            <p className="text-blue-100 mb-4">
+              Join our community of professional trainers and help others achieve their fitness goals
+            </p>
+            <button
+              onClick={handleBecomeTrainer}
+              className="bg-white text-blue-400 px-8 py-3 rounded-lg cursor-pointer hover:bg-gray-100 duration-200 text-lg flex items-center gap-2 mx-auto"
+            >
+              Become a Trainer <FaArrowRight />
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-5 px-6">
+          {trainers.map((trainer) => (
             <div
               key={trainer._id}
               className="group relative bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-300 hover:shadow-xl transition-all duration-300"
@@ -59,7 +81,7 @@ const AllTriners = () => {
               <div className="flex flex-col items-center pt-8 pb-4 px-6 bg-gradient-to-br from-blue-50 to-white">
                 <div className="w-28 h-28 rounded-2xl overflow-hidden border-4 border-white">
                   <img
-                    src={trainer.profileImage || "/placeholder.svg"}
+                    src={trainer.photo || "/placeholder.svg"}
                     alt={trainer.name}
                     className="w-full h-full object-cover"
                   />
@@ -69,7 +91,8 @@ const AllTriners = () => {
                 </h2>
                 <p className="text-sm text-gray-500 flex items-center gap-1 mt-1">
                   <FaAward className="text-yellow-500" />
-                  {trainer.experience} {trainer.experience > 1 ? "years" : "year"} experience
+                  {trainer.experience}{" "}
+                  {trainer.experience > 1 ? "years" : "year"} experience
                 </p>
               </div>
 
@@ -98,7 +121,8 @@ const AllTriners = () => {
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

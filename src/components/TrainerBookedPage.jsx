@@ -2,23 +2,22 @@ import {
   FaUser,
   FaClock,
   FaDumbbell,
-  FaCheck,
-  FaStar,
   FaArrowRight,
   FaCrown,
-  FaGem,
+  FaStar,
   FaShieldAlt,
-  FaEdit,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const TrainerBookedPage = () => {
   const navigate = useNavigate();
-    const selectedSlot = localStorage.getItem("selectedSlot");
+
+  const selectedSlot = localStorage.getItem("selectedSlot");
+  const Name = localStorage.getItem("trainerName");
+  const skills = JSON.parse(localStorage.getItem("skills") || "[]");
+
   const bookingInfo = {
-    trainerName: "Alex Morgan",
-    // selectedSlot: "2:00 PM - 3:00 PM",
-    classes: ["Yoga", "CrossFit", "Strength Training"],
+    trainerName: Name,
     packages: [
       {
         name: "Basic Membership",
@@ -59,9 +58,9 @@ const TrainerBookedPage = () => {
     ],
   };
 
-  const handleBecomeTrainer=()=>{
-    navigate("/become-trainer")
-  }
+  const handleBecomeTrainer = () => {
+    navigate("/become-trainer");
+  };
 
   return (
     <div className="min-h-screen lexend bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8">
@@ -80,46 +79,37 @@ const TrainerBookedPage = () => {
                 <FaUser className="w-5 h-5 text-blue-600" aria-hidden="true" />
               </div>
               <div className="flex-1">
-                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                  Trainer
-                </p>
-                <p className="text-sm font-semibold text-gray-900">
-                  {bookingInfo.trainerName}
-                </p>
+                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Trainer</p>
+                <p className="text-sm font-semibold text-gray-900">{bookingInfo.trainerName}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3 p-3 rounded-md bg-gradient-to-r from-green-50 to-white hover:from-green-100 hover:to-white transition-colors">
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <FaClock
-                  className="w-5 h-5 text-green-600"
-                  aria-hidden="true"
-                />
+                <FaClock className="w-5 h-5 text-green-600" aria-hidden="true" />
               </div>
               <div className="flex-1">
-                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                  Time Slot
-                </p>
-                <p className="text-sm font-semibold text-gray-900">
-                  {selectedSlot}
-                </p>
+                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Time Slot</p>
+                <p className="text-sm font-semibold text-gray-900">{selectedSlot}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3 p-3 rounded-md bg-gradient-to-r from-orange-50 to-white hover:from-orange-100 hover:to-white transition-colors">
               <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <FaDumbbell
-                  className="w-5 h-5 text-orange-600"
-                  aria-hidden="true"
-                />
+                <FaDumbbell className="w-5 h-5 text-orange-600" aria-hidden="true" />
               </div>
               <div className="flex-1">
-                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                  Classes
-                </p>
-                <p className="text-sm font-semibold text-gray-900">
-                  {bookingInfo.classes.join(", ") || "No classes selected"}
-                </p>
+                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Classes</p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {skills.map((skill, i) => (
+                    <span
+                      key={i}
+                      className="text-sm font-medium bg-orange-100 text-orange-700 px-2.5 py-1 rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -152,14 +142,10 @@ const TrainerBookedPage = () => {
                     {pkg.icon}
                   </div>
 
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {pkg.name}
-                  </h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{pkg.name}</h3>
 
                   <div className="mb-4">
-                    <span className="text-3xl font-bold text-gray-900">
-                      {pkg.price}
-                    </span>
+                    <span className="text-3xl font-bold text-gray-900">{pkg.price}</span>
                     <span className="text-gray-500 text-sm">/month</span>
                   </div>
 
@@ -202,12 +188,9 @@ const TrainerBookedPage = () => {
 
         <div className="text-center">
           <div className="bg-blue-400 text-white p-6 rounded-xl mb-8 text-center">
-            <h2 className="text-2xl font-bold mb-2">
-              Ready to Share Your Expertise?
-            </h2>
+            <h2 className="text-2xl font-bold mb-2">Ready to Share Your Expertise?</h2>
             <p className="text-blue-100 mb-4">
-              Join our community of professional trainers and help others
-              achieve their fitness goals
+              Join our community of professional trainers and help others achieve their fitness goals
             </p>
             <button
               onClick={handleBecomeTrainer}

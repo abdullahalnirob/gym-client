@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   FaUsers,
   FaUserTie,
@@ -11,30 +13,91 @@ import {
   FaHome,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import useAuth from "../hook/useAuth";
+import toast from "react-hot-toast";
 
-const menuItems = [
-    { label: "Home", icon: <FaHome />, path: "/" },
-  { label: "All Subscribers", icon: <FaUsers />, path: "/dashboard/newsletter" },
-  { label: "All Trainers", icon: <FaUserTie />, path: "/dashboard/all-trainers" },
-  { label: "Applied Trainers", icon: <FaUserCheck />, path: "/dashboard/applied-trainers" },
-  { label: "Balance Overview", icon: <FaMoneyBill />, path: "/dashboard/balance" },
+const AdminMenus = [
+  { label: "Home", icon: <FaHome />, path: "/" },
+  {
+    label: "All Subscribers",
+    icon: <FaUsers />,
+    path: "/dashboard/newsletter",
+  },
+  {
+    label: "All Users",
+    icon: <FaUsers />,
+    path: "/dashboard/all-users",
+  },
+  {
+    label: "All Trainers",
+    icon: <FaUserTie />,
+    path: "/dashboard/all-trainers",
+  },
+  {
+    label: "Applied Trainers",
+    icon: <FaUserCheck />,
+    path: "/dashboard/applied-trainers",
+  },
+  {
+    label: "Balance Overview",
+    icon: <FaMoneyBill />,
+    path: "/dashboard/balance",
+  },
   { label: "Add New Class", icon: <FaPlus />, path: "/dashboard/add-class" },
   { label: "All Classes", icon: <FaBookOpen />, path: "/dashboard/classes" },
 ];
 
+const UserMenus = [
+  { label: "Home", icon: <FaHome />, path: "/" },
+  { label: "All Classes", icon: <FaBookOpen />, path: "/dashboard/classes" },
+];
+
+const TrainerMenus = [
+  { label: "Home", icon: <FaHome />, path: "/" },
+  { label: "My Classes", icon: <FaBookOpen />, path: "/dashboard/my-classes" },
+];
+
 const SideBar = () => {
+  const { user } = useAuth();
+  const [role, setRole] = useState("user");
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data: users = [] } = useQuery({
+    queryKey: ["allUsers"],
+    queryFn: async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/allusers");
+        return res.data?.users || [];
+      } catch (err) {
+        toast.error("Failed to fetch users.");
+        throw new Error("Error fetching users");
+      }
+    },
+  });
+
+  useEffect(() => {
+    const matchedUser = users.find((u) => u.email === user?.email);
+    if (matchedUser?.role) {
+      setRole(matchedUser.role);
+    }
+  }, [user?.email, users]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  const menuToRender =
+    role === "admin"
+      ? AdminMenus
+      : role === "trainer"
+      ? TrainerMenus
+      : UserMenus;
+
   return (
     <>
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 bg-blue-400 text-white rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 bg-blue-400 text-white rounded-lg hover:bg-blue-500"
         onClick={toggleSidebar}
-        aria-label={isOpen ? "Close Sidebar" : "Open Sidebar"}
       >
         {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
       </button>
@@ -45,19 +108,23 @@ const SideBar = () => {
         } lg:translate-x-0 z-40`}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-blue-600">Admin Panel</h2>
+          <h2 className="text-2xl font-bold text-blue-600">Dashboard</h2>
           <button
-            className="lg:hidden p-2 text-gray-600 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300 rounded"
+            className="lg:hidden p-2 text-gray-600 hover:text-blue-400"
             onClick={toggleSidebar}
-            aria-label="Close Sidebar"
           >
             <FaTimes size={20} />
           </button>
         </div>
 
         <nav className="flex flex-col gap-1.5">
-          {menuItems.map((item) => (
-            <NavLink key={item.path} to={item.path} title={item.label} className="relative">
+          {menuToRender.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              title={item.label}
+              className="relative"
+            >
               {({ isActive }) => (
                 <>
                   <div
@@ -89,7 +156,6 @@ const SideBar = () => {
         <div
           className="fixed inset-0 bg-black/50 lg:hidden z-30"
           onClick={toggleSidebar}
-          aria-hidden="true"
         ></div>
       )}
     </>

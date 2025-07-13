@@ -8,6 +8,8 @@ import useAuth from "../hook/useAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../firebase/firebase";
 const Register = () => {
   const [imageFile, setImageFile] = useState(null);
   const { createUser, user, updateUser, setUser } = useAuth();
@@ -68,14 +70,40 @@ const Register = () => {
         console.error("Signup error:", err);
         toast.error("Account creation failed!");
       });
-    axios.post("http://localhost:3000/api/users", {
-      name: data.displayName,
-      photo: imageUrl,
-      role: "user",
-      experience: null,
-      socials: null,
-      availableSlots: null,
-    });
+   axios.post("http://localhost:3000/api/users", {
+  name: data.name,
+  email: data.email,
+  photo: imageUrl,
+  role: "user",
+  experience: null,
+  socials: null,
+});
+
+  };
+
+  const provider = new GoogleAuthProvider();
+  const SignInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+
+        axios.post("http://localhost:3000/api/users", {
+          name: user.displayName,
+          photo: user.photoURL,
+          email: user.email,
+          role: "user",
+          experience: null,
+          socials: null,
+        }).then(() => {
+          toast.success("User login successful!");
+          navigate("/");
+        });
+      })
+      .catch((err) => {
+        console.error("Google Sign-in Error:", err);
+        toast.error("Google Sign-in failed.");
+      });
   };
 
   return (
@@ -96,9 +124,8 @@ const Register = () => {
           <div className="flex flex-col gap-2">
             <label htmlFor="name">Full Name</label>
             <div
-              className={`${
-                errors.name ? "ring-1 ring-red-400" : "ring-1 ring-gray-300"
-              } flex items-center rounded-md focus-within:ring-blue-400 px-3`}
+              className={`${errors.name ? "ring-1 ring-red-400" : "ring-1 ring-gray-300"
+                } flex items-center rounded-md focus-within:ring-blue-400 px-3`}
             >
               <User className="text-gray-500 w-5 h-5" />
               <input
@@ -118,9 +145,8 @@ const Register = () => {
           <div className="flex flex-col gap-2 mt-3">
             <label htmlFor="email">Email</label>
             <div
-              className={`${
-                errors.email ? "ring-1 ring-red-400" : "ring-1 ring-gray-300"
-              } flex items-center rounded-md focus-within:ring-blue-400 px-3`}
+              className={`${errors.email ? "ring-1 ring-red-400" : "ring-1 ring-gray-300"
+                } flex items-center rounded-md focus-within:ring-blue-400 px-3`}
             >
               <Mail className="text-gray-500 w-5 h-5" />
               <input
@@ -161,9 +187,8 @@ const Register = () => {
           <div className="flex flex-col gap-2 mt-3">
             <label htmlFor="password">Password</label>
             <div
-              className={`${
-                errors.password ? "ring-1 ring-red-400" : "ring-1 ring-gray-300"
-              } flex items-center rounded-md focus-within:ring-blue-400 px-3`}
+              className={`${errors.password ? "ring-1 ring-red-400" : "ring-1 ring-gray-300"
+                } flex items-center rounded-md focus-within:ring-blue-400 px-3`}
             >
               <Lock className="text-gray-500 w-5 h-5" />
               <input
@@ -192,7 +217,11 @@ const Register = () => {
           >
             Sign up
           </button>
-          <button className="py-2 px-4 flex items-center bg-gray-100 hover:bg-blue-200 duration-200 text-gray-600 ring-1 ring-gray-400 shadow-md justify-center rounded-lg font-semibold w-full text-lg cursor-pointer mt-3">
+          <button
+            type="button"
+            onClick={SignInWithGoogle}
+            className="py-2 px-4 flex items-center bg-gray-100 hover:bg-blue-200 duration-200 text-gray-600 ring-1 ring-gray-400 shadow-md justify-center rounded-lg font-semibold w-full text-lg cursor-pointer mt-3"
+          >
             <img src="google.png" className="w-10 mr-2" alt="Google logo" />
             <div>Continue with Google</div>
           </button>

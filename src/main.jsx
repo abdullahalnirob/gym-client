@@ -17,7 +17,7 @@ createRoot(document.getElementById("root")).render(
     <AuthProvider>
       <PrimeReactProvider>
         <Toaster
-          position="top-right"
+          position="top-center"
           reverseOrder={false}
         />
         <QueryClientProvider client={queryClient}>
