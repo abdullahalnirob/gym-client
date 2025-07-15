@@ -125,8 +125,6 @@ const BecomeTrainer = () => {
               </span>
             )}
           </div>
-
-          {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Email
@@ -140,8 +138,6 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
-
-          {/* Age */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Age
@@ -159,8 +155,6 @@ const BecomeTrainer = () => {
               <span className="text-red-500 text-xs">Age is required</span>
             )}
           </div>
-
-          {/* Profile Image */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Profile Image URL
@@ -175,8 +169,6 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
-
-          {/* Experience */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Years of Experience
@@ -191,8 +183,6 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
-
-          {/* Skills */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Skills
@@ -210,8 +200,6 @@ const BecomeTrainer = () => {
               ))}
             </div>
           </div>
-
-          {/* Available Days */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Available Days
@@ -230,8 +218,6 @@ const BecomeTrainer = () => {
               )}
             />
           </div>
-
-          {/* Available Time */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Available Time
@@ -250,8 +236,6 @@ const BecomeTrainer = () => {
               )}
             />
           </div>
-
-          {/* Other Info */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Other Info
@@ -266,8 +250,6 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
-
-          {/* Facebook */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Facebook
@@ -282,8 +264,6 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
-
-          {/* Instagram */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Instagram
@@ -298,8 +278,6 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
-
-          {/* LinkedIn */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               LinkedIn
@@ -314,8 +292,6 @@ const BecomeTrainer = () => {
               />
             </div>
           </div>
-
-          {/* Submit */}
           <div className="text-right pt-2">
             <button
               type="submit"

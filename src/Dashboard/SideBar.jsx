@@ -141,7 +141,7 @@ const SideBar = () => {
                   </div>
 
                   <span
-                    className={`absolute left-0 h-6 w-1 bg-blue-400 rounded-r-full transition-opacity duration-200 ${
+                    className={`absolute top-3 left-0 h-6 w-1 bg-blue-400 rounded-r-full transition-opacity duration-200 ${
                       isActive ? "opacity-100" : "opacity-0"
                     }`}
                   ></span>

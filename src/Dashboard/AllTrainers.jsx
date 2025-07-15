@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -28,7 +27,6 @@ const AllTrainers = () => {
 
   const trainers = users.filter((user) => user.role === "trainer");
 
-  // Use mutation for better control
   const removeTrainerMutation = useMutation({
     mutationFn: async (id) => {
       const { data } = await axios.patch(
@@ -48,9 +46,10 @@ const AllTrainers = () => {
     },
     onError: (error) => {
       console.error("Error:", error);
-      const errorMessage = error.response?.data?.message || 
-                          error.message || 
-                          "Failed to update trainer role";
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to update trainer role";
       toast.error(errorMessage);
     },
   });
@@ -61,9 +60,7 @@ const AllTrainers = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <Toaster position="top-right" />
       <h1 className="text-2xl font-bold text-blue-600 mb-6">All Trainers</h1>
-
       {isLoading ? (
         <div className="flex justify-center items-center h-40">
           <p className="text-gray-500">Loading trainers...</p>
@@ -91,32 +88,36 @@ const AllTrainers = () => {
                   e.target.src = "/avatar.png";
                 }}
               />
-              <h2 className="text-lg font-semibold text-gray-800">{trainer.name}</h2>
+              <h2 className="text-lg font-semibold text-gray-800">
+                {trainer.name}
+              </h2>
               <p className="text-sm text-gray-500 mb-2">{trainer.email}</p>
-              
+
               {/* Additional trainer info */}
               {trainer.skills && (
                 <p className="text-xs text-gray-600 mb-1">
                   Skills: {trainer.skills.join(", ")}
                 </p>
               )}
-              
+
               {trainer.experience && (
                 <p className="text-xs text-gray-600 mb-3">
                   Experience: {trainer.experience} years
                 </p>
               )}
-              
+
               <button
                 onClick={() => handleDeleteTrainer(trainer._id)}
                 disabled={removeTrainerMutation.isPending}
                 className={`mt-3 text-xs py-2 px-4 rounded duration-200 transition-colors ${
                   removeTrainerMutation.isPending
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-red-500 hover:bg-red-600 cursor-pointer'
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-red-500 hover:bg-red-600 cursor-pointer"
                 } text-white`}
               >
-                {removeTrainerMutation.isPending ? 'Removing...' : 'Remove Trainer Role'}
+                {removeTrainerMutation.isPending
+                  ? "Removing..."
+                  : "Remove Trainer Role"}
               </button>
             </div>
           ))}

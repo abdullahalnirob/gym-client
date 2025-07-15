@@ -13,6 +13,8 @@ import AppliedTrainers from "../Dashboard/AppliedTrainers";
 import AdminRoute from "./AdminRoute";
 import AllUsers from "../Dashboard/AllUsers";
 import AllTrainers from "../Dashboard/AllTrainers";
+import AddClass from "../Dashboard/AddClass";
+import AllClasses from "../components/AllClasses";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "/trainers/:id",
         Component: Trainer,
+      },
+      {
+        path: "/classes",
+        Component: AllClasses,
       },
       {
         path: "/trainer-booked-page/:id",
@@ -91,6 +97,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <AdminRoute>
               <AllTrainers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-class",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AddClass />
             </AdminRoute>
           </PrivateRoute>
         ),
