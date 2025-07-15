@@ -30,6 +30,8 @@ const AllUsers = () => {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const { user } = useAuth();
+
+  // Query to get all users
   const {
     data = [],
     isLoading,

@@ -6,7 +6,7 @@ const TrainerRouter = ({ children }) => {
 
   if (loading) return <p>Loading...</p>;
 
-  if (role !== "admin") {
+  if (role !== "trainer") {
     return <Navigate to="/" replace />;
   }
 

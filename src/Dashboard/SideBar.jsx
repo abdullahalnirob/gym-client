@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { FaCheckToSlot } from "react-icons/fa6";
+import { MdOutlinePostAdd } from "react-icons/md";
 import {
   FaUsers,
   FaUserTie,
@@ -15,6 +17,7 @@ import {
 import { NavLink } from "react-router-dom";
 import useAuth from "../hook/useAuth";
 import toast from "react-hot-toast";
+import { Plus } from "lucide-react";
 
 const AdminMenus = [
   { label: "Home", icon: <FaHome />, path: "/" },
@@ -45,6 +48,8 @@ const AdminMenus = [
   },
   { label: "Add New Class", icon: <FaPlus />, path: "/dashboard/add-class" },
   { label: "All Classes", icon: <FaBookOpen />, path: "/dashboard/classes" },
+    { label: "Add new Forum", icon: <Plus />, path: "/dashboard/add-forum" },
+
 ];
 
 const UserMenus = [
@@ -54,7 +59,13 @@ const UserMenus = [
 
 const TrainerMenus = [
   { label: "Home", icon: <FaHome />, path: "/" },
-  { label: "My Classes", icon: <FaBookOpen />, path: "/dashboard/my-classes" },
+  {
+    label: "Manage Slots",
+    icon: <FaCheckToSlot />,
+    path: "/dashboard/manage-slots",
+  },
+  { label: "Add New slot", icon: <Plus />, path: "/dashboard/add-slot" },
+  { label: "Add new Forum", icon: <MdOutlinePostAdd />, path: "/dashboard/add-forum" },
 ];
 
 const SideBar = () => {

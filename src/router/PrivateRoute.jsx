@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-[70vh]">
-        <CircularProgress size={50} sx={{ color: '#60a5fa' }} />
+        <CircularProgress size={50} sx={{ color: "#60a5fa" }} />
       </div>
     );
   }

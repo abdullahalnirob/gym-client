@@ -11,10 +11,14 @@ import BecomeTrainer from "../components/BecomeTrainer";
 import Dashboard from "../Dashboard/Dashboard";
 import AppliedTrainers from "../Dashboard/AppliedTrainers";
 import AdminRoute from "./AdminRoute";
+import TrainerRouter from "./TrainerRouter";
 import AllUsers from "../Dashboard/AllUsers";
 import AllTrainers from "../Dashboard/AllTrainers";
 import AddClass from "../Dashboard/AddClass";
 import AllClasses from "../components/AllClasses";
+import DashboardAllClasses from "../Dashboard/DashboardAllClasses";
+import ManageSlot from "../Dashboard/ManageSlot";
+import AddSlot from "../Dashboard/AddSlot";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -108,6 +112,36 @@ export const router = createBrowserRouter([
             <AdminRoute>
               <AddClass />
             </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/classes",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <DashboardAllClasses />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manage-slots",
+        element: (
+          <PrivateRoute>
+            <TrainerRouter>
+              <ManageSlot />
+            </TrainerRouter>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-slot",
+        element: (
+          <PrivateRoute>
+            <TrainerRouter>
+              <AddSlot />
+            </TrainerRouter>
           </PrivateRoute>
         ),
       },

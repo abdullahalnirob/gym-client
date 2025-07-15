@@ -28,9 +28,43 @@ const dayOptions = [
 ];
 
 const timeOptions = [
-  { value: "10:00 AM - 11:00 AM", label: "10:00 AM - 11:00 AM" },
-  { value: "1:00 PM - 2:00 PM", label: "1:00 PM - 2:00 PM" },
-  { value: "5:00 PM - 6:00 PM", label: "5:00 PM - 6:00 PM" },
+  //Morning
+  {
+    value: "6:00 AM - 7:00 AM",
+    label: "6:00 AM - 7:00 AM",
+    category: "morning",
+  },
+  {
+    value: "8:00 AM - 9:00 AM",
+    label: "8:00 AM - 9:00 AM",
+    category: "morning",
+  },
+
+  //Evening
+  {
+    value: "4:00 PM - 5:00 PM",
+    label: "4:00 PM - 5:00 PM",
+    category: "evening",
+  },
+  {
+    value: "5:00 PM - 6:00 PM",
+    label: "5:00 PM - 6:00 PM",
+    category: "evening",
+  },
+  {
+    value: "6:00 PM - 7:00 PM",
+    label: "6:00 PM - 7:00 PM",
+    category: "evening",
+  },
+
+  //Night
+  { value: "7:00 PM - 8:00 PM", label: "7:00 PM - 8:00 PM", category: "night" },
+  { value: "8:00 PM - 9:00 PM", label: "8:00 PM - 9:00 PM", category: "night" },
+  {
+    value: "9:00 PM - 10:00 PM",
+    label: "9:00 PM - 10:00 PM",
+    category: "night",
+  },
 ];
 
 const skillOptions = ["Yoga", "CrossFit", "Cardio", "Strength", "Zumba"];
