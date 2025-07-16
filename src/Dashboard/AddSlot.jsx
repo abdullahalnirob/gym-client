@@ -85,21 +85,26 @@ const AddSlot = () => {
   } = useForm();
 
   // Submit form to add slot
-  const onSubmit = async (data) => {
-    const selectedSlot = data.timeSlot.value;
+const onSubmit = async (data) => {
+  const selectedSlot = data.timeSlot.value;
 
-    try {
-      await axios.patch(`http://localhost:3000/api/allusers/${id}`, {
-        timeSlot: selectedSlot,
-      });
-      // toa("Slot added successfully!");
-      toast.success("Slot added successfully!");
-      reset();
-    } catch (error) {
-      console.error("Error adding slot:", error);
-      alert("Failed to add slot");
-    }
-  };
+  try {
+    await axios.patch(`http://localhost:3000/api/allusers/${id}`, {
+      timeSlot: selectedSlot,
+    });
+    toast.success("Slot added successfully!");
+    reset();
+  } catch (error) {
+    console.error("Error adding slot:", error);
+
+    // Safely get the error message from the server
+    const message =
+      error.response?.data?.message || "Something went wrong. Please try again.";
+
+    toast.error(message);
+  }
+};
+
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white shadow-md rounded-lg p-6">

@@ -48,7 +48,7 @@ const AdminMenus = [
   },
   { label: "Add New Class", icon: <FaPlus />, path: "/dashboard/add-class" },
   { label: "All Classes", icon: <FaBookOpen />, path: "/dashboard/classes" },
-    { label: "Add new Forum", icon: <Plus />, path: "/dashboard/add-forum" },
+     { label: "Add new Forum", icon: <MdOutlinePostAdd />, path: "/dashboard/add-forum" },
 
 ];
 

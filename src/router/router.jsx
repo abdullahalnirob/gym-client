@@ -19,6 +19,10 @@ import AllClasses from "../components/AllClasses";
 import DashboardAllClasses from "../Dashboard/DashboardAllClasses";
 import ManageSlot from "../Dashboard/ManageSlot";
 import AddSlot from "../Dashboard/AddSlot";
+import AddForum from "../Dashboard/AddForum";
+import Community from "../components/Community";
+import TrainerandAdminRouter from "./TrainerandAdminRouter";
+import Payment from "../components/Payment";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -50,6 +54,10 @@ export const router = createBrowserRouter([
         Component: AllClasses,
       },
       {
+        path: "/community",
+        Component: Community,
+      },
+      {
         path: "/trainer-booked-page/:id",
         element: (
           <PrivateRoute>
@@ -62,6 +70,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <BecomeTrainer />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/payment/:id",
+        element: (
+          <PrivateRoute>
+            <Payment />
           </PrivateRoute>
         ),
       },
@@ -142,6 +158,16 @@ export const router = createBrowserRouter([
             <TrainerRouter>
               <AddSlot />
             </TrainerRouter>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-forum",
+        element: (
+          <PrivateRoute>
+            <TrainerandAdminRouter>
+              <AddForum />
+            </TrainerandAdminRouter>
           </PrivateRoute>
         ),
       },
