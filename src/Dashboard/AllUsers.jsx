@@ -57,7 +57,6 @@ const AllUsers = () => {
       toast.error("Something went wrong")
     })
 
-    console.log(id);
   };
   const handleClose = () => {
     setOpen(false);

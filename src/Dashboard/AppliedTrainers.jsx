@@ -1,14 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import {
-  Modal,
-  Box,
-  Typography,
-  Avatar,
-  Chip,
-  Divider,
-} from "@mui/material";
+import { Modal, Box, Typography, Avatar, Chip, Divider } from "@mui/material";
 import toast from "react-hot-toast";
 
 const fetchPendingTrainers = async () => {
@@ -63,7 +56,6 @@ const AppliedTrainers = () => {
       socials: trainer.socials,
       experence: trainer.experience,
     };
-
     axios
       .patch("http://localhost:3000/api/users", setData)
       .then(() => {
@@ -72,8 +64,13 @@ const AppliedTrainers = () => {
         );
       })
       .then(() => {
+        axios.patch("http://localhost:3000/api/activty", {
+          email: trainer.email,
+          status: "approved",
+          role: "trainer",
+        });
         toast.success("Trainer approved successfully!");
-        refetch(); // Refresh list
+        refetch();
       })
       .catch((err) => {
         toast.error(err.message || "Approval failed");
@@ -191,7 +188,12 @@ const AppliedTrainers = () => {
           <Box sx={modalStyle}>
             {selectedTrainer && (
               <>
-                <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  mb={2}
+                >
                   <Avatar
                     src={selectedTrainer.profileImage}
                     alt={selectedTrainer.name}
@@ -218,7 +220,12 @@ const AppliedTrainers = () => {
                 <Typography variant="body1" gutterBottom>
                   <strong>Skills:</strong>{" "}
                   {selectedTrainer.skills.map((skill, idx) => (
-                    <Chip key={idx} label={skill} size="small" sx={{ mr: 1, mt: 0.5 }} />
+                    <Chip
+                      key={idx}
+                      label={skill}
+                      size="small"
+                      sx={{ mr: 1, mt: 0.5 }}
+                    />
                   ))}
                 </Typography>
 

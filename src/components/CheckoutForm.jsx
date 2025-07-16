@@ -3,15 +3,19 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import useAut from "../hook/useAuth";
 const CheckoutForm = ({ id }) => {
+  const { user } = useAut();
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-
+  
+  const trinerName = localStorage.getItem("trainerName");
+  const skills = localStorage.getItem("skills");
+  const selectedSlot = localStorage.getItem("selectedSlot");
   const price = localStorage.getItem("price");
-  const intPrice = parseInt(price); 
+  const intPrice = parseInt(price);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,35 +29,53 @@ const CheckoutForm = ({ id }) => {
     }
 
     try {
-      // Step 1: Get clientSecret from server
-      const { data } = await axios.post("http://localhost:3000/api/create-payment-intent", {
-        amount: intPrice * 100,
-        id: id,
-      });
+      const { data } = await axios.post(
+        "http://localhost:3000/api/create-payment-intent",
+        {
+          amount: intPrice * 100,
+          id: id,
+        }
+      );
 
       const clientSecret = data.clientSecret;
 
-      // Step 2: Confirm payment
-      const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card,
-        },
-      });
+      const { paymentIntent, error } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card,
+          },
+        }
+      );
 
       if (error) {
         setMessage(error.message);
-        toast.error("❌ Payment failed!");
+        toast.error("ayment failed!");
       } else if (paymentIntent.status === "succeeded") {
-        setMessage("✅ Payment successful!");
-        toast.success("🎉 Payment completed!");
-
-        // Redirect to dashboard
+        setMessage("Payment successful!");
+        toast.success("Payment completed!");
+        axios
+          .post("http://localhost:3000/api/paymenthistory", {
+            id: id,
+            email: user.email,
+            amount: intPrice,
+            status: "paid",
+            trinerName:trinerName,
+            selectedSlot:selectedSlot,
+            classInfo:skills
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         setTimeout(() => navigate("/dashboard"), 2000);
       }
     } catch (err) {
       console.error("Payment error:", err);
       setMessage("Payment error occurred");
-      toast.error("❌ Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 

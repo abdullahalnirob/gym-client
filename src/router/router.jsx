@@ -23,6 +23,10 @@ import AddForum from "../Dashboard/AddForum";
 import Community from "../components/Community";
 import TrainerandAdminRouter from "./TrainerandAdminRouter";
 import Payment from "../components/Payment";
+import Balance from "../Dashboard/Balance";
+import Profile from "../Dashboard/Profile";
+import Activity from "../Dashboard/Activity";
+import BookedTrainer from "../Dashboard/BookedTrainer";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -112,6 +116,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/dashboard/balance",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <Balance />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/dashboard/all-trainers",
         element: (
           <PrivateRoute>
@@ -168,6 +182,30 @@ export const router = createBrowserRouter([
             <TrainerandAdminRouter>
               <AddForum />
             </TrainerandAdminRouter>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/activity",
+        element: (
+          <PrivateRoute>
+            <Activity />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/booked-trainer",
+        element: (
+          <PrivateRoute>
+            <BookedTrainer />
           </PrivateRoute>
         ),
       },

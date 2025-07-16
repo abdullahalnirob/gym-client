@@ -118,6 +118,12 @@ const BecomeTrainer = () => {
       );
 
       if (res.status === 200) {
+        const formattedData = {
+          email: user?.email,
+          role:"user",
+          status: "pending"
+        }
+        axios.post("http://localhost:3000/api/activity", formattedData)
         toast.success("Trainer Application Submitted Successfully");
         reset();
       } else {

@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { LuSquareActivity } from "react-icons/lu";
 import { FaCheckToSlot } from "react-icons/fa6";
 import { MdOutlinePostAdd } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 import {
   FaUsers,
+  FaTasks,
   FaUserTie,
   FaUserCheck,
   FaMoneyBill,
@@ -48,13 +51,18 @@ const AdminMenus = [
   },
   { label: "Add New Class", icon: <FaPlus />, path: "/dashboard/add-class" },
   { label: "All Classes", icon: <FaBookOpen />, path: "/dashboard/classes" },
-     { label: "Add new Forum", icon: <MdOutlinePostAdd />, path: "/dashboard/add-forum" },
-
+  {
+    label: "Add new Forum",
+    icon: <MdOutlinePostAdd />,
+    path: "/dashboard/add-forum",
+  },
 ];
 
 const UserMenus = [
   { label: "Home", icon: <FaHome />, path: "/" },
-  { label: "All Classes", icon: <FaBookOpen />, path: "/dashboard/classes" },
+  { label: "Profile", icon: <CgProfile />, path: "/dashboard/profile" },
+  { label: "Activity", icon: <LuSquareActivity />, path: "/dashboard/activity" },
+  { label: "Booked Trainer", icon: <FaTasks />, path: "/dashboard/booked-trainer" },
 ];
 
 const TrainerMenus = [
@@ -65,7 +73,11 @@ const TrainerMenus = [
     path: "/dashboard/manage-slots",
   },
   { label: "Add New slot", icon: <Plus />, path: "/dashboard/add-slot" },
-  { label: "Add new Forum", icon: <MdOutlinePostAdd />, path: "/dashboard/add-forum" },
+  {
+    label: "Add new Forum",
+    icon: <MdOutlinePostAdd />,
+    path: "/dashboard/add-forum",
+  },
 ];
 
 const SideBar = () => {
