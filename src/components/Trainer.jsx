@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from "react";
 
 const fetchUser = async (id) => {
-  const { data } = await axios.get(`http://localhost:3000/api/user?_id=${id}`);
+  const { data } = await axios.get(`https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/user?_id=${id}`);
   return data;
 };
 

@@ -11,7 +11,9 @@ const useRole = () => {
   const { data: users = [] } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/api/allusers");
+      const res = await axios.get(
+        "https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers"
+      );
       return res.data?.users || [];
     },
   });

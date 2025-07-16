@@ -5,7 +5,7 @@ import { Modal, Box, Typography, Avatar, Chip, Divider } from "@mui/material";
 import toast from "react-hot-toast";
 
 const fetchPendingTrainers = async () => {
-  const response = await axios.get("http://localhost:3000/api/pendingtrainer");
+  const response = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/pendingtrainer");
   return response.data.users;
 };
 
@@ -57,14 +57,14 @@ const AppliedTrainers = () => {
       experence: trainer.experience,
     };
     axios
-      .patch("http://localhost:3000/api/users", setData)
+      .patch("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/users", setData)
       .then(() => {
         return axios.delete(
-          `http://localhost:3000/api/pendingtrainer/${trainer._id}`
+          `https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/pendingtrainer/${trainer._id}`
         );
       })
       .then(() => {
-        axios.patch("http://localhost:3000/api/activty", {
+        axios.patch("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/activty", {
           email: trainer.email,
           status: "approved",
           role: "trainer",
@@ -79,7 +79,7 @@ const AppliedTrainers = () => {
 
   const rejectTrainer = (trainerId) => {
     axios
-      .delete(`http://localhost:3000/api/pendingtrainer/${trainerId}`)
+      .delete(`https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/pendingtrainer/${trainerId}`)
       .then(() => {
         toast.success("Trainer rejected successfully!");
         refetch();

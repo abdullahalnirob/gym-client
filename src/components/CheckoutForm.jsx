@@ -10,7 +10,7 @@ const CheckoutForm = ({ id }) => {
   const elements = useElements();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-  
+
   const trinerName = localStorage.getItem("trainerName");
   const skills = localStorage.getItem("skills");
   const selectedSlot = localStorage.getItem("selectedSlot");
@@ -30,7 +30,7 @@ const CheckoutForm = ({ id }) => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/create-payment-intent",
+        "https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/create-payment-intent",
         {
           amount: intPrice * 100,
           id: id,
@@ -55,14 +55,14 @@ const CheckoutForm = ({ id }) => {
         setMessage("Payment successful!");
         toast.success("Payment completed!");
         axios
-          .post("http://localhost:3000/api/paymenthistory", {
+          .post("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/paymenthistory", {
             id: id,
             email: user.email,
             amount: intPrice,
             status: "paid",
-            trinerName:trinerName,
-            selectedSlot:selectedSlot,
-            classInfo:skills
+            trinerName: trinerName,
+            selectedSlot: selectedSlot,
+            classInfo: skills
           })
           .then((res) => {
             console.log(res);

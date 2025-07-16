@@ -63,7 +63,7 @@ const AddSlot = () => {
   // Fetch trainer ID
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/allusers")
+      .get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers")
       .then((res) => {
         const trainer = res.data.users.find(
           (u) => u.role === "trainer" && u.email === user.email
@@ -85,25 +85,25 @@ const AddSlot = () => {
   } = useForm();
 
   // Submit form to add slot
-const onSubmit = async (data) => {
-  const selectedSlot = data.timeSlot.value;
+  const onSubmit = async (data) => {
+    const selectedSlot = data.timeSlot.value;
 
-  try {
-    await axios.patch(`http://localhost:3000/api/allusers/${id}`, {
-      timeSlot: selectedSlot,
-    });
-    toast.success("Slot added successfully!");
-    reset();
-  } catch (error) {
-    console.error("Error adding slot:", error);
+    try {
+      await axios.patch(`https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers/${id}`, {
+        timeSlot: selectedSlot,
+      });
+      toast.success("Slot added successfully!");
+      reset();
+    } catch (error) {
+      console.error("Error adding slot:", error);
 
-    // Safely get the error message from the server
-    const message =
-      error.response?.data?.message || "Something went wrong. Please try again.";
+      // Safely get the error message from the server
+      const message =
+        error.response?.data?.message || "Something went wrong. Please try again.";
 
-    toast.error(message);
-  }
-};
+      toast.error(message);
+    }
+  };
 
 
   return (

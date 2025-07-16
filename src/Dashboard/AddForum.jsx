@@ -14,7 +14,7 @@ const AddForum = () => {
 
   const onSubmit = async (data) => {
     try {
-      await axios.post("http://localhost:3000/api/forum", {
+      await axios.post("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/forum", {
         title: data.title,
         description: data.description,
       });
@@ -43,9 +43,8 @@ const AddForum = () => {
             Title
           </label>
           <div
-            className={`flex items-center rounded-md px-3 ring-1 ${
-              errors.title ? "ring-red-400" : "ring-gray-300"
-            } focus-within:ring-blue-400 transition`}
+            className={`flex items-center rounded-md px-3 ring-1 ${errors.title ? "ring-red-400" : "ring-gray-300"
+              } focus-within:ring-blue-400 transition`}
           >
             <FaHeading className="text-gray-500 w-5 h-5" />
             <input
@@ -68,9 +67,8 @@ const AddForum = () => {
             Description
           </label>
           <div
-            className={`flex items-start rounded-md px-3 pt-2 ring-1 ${
-              errors.description ? "ring-red-400" : "ring-gray-300"
-            } focus-within:ring-blue-400 transition`}
+            className={`flex items-start rounded-md px-3 pt-2 ring-1 ${errors.description ? "ring-red-400" : "ring-gray-300"
+              } focus-within:ring-blue-400 transition`}
           >
             <FaAlignLeft className="text-gray-500 w-5 h-5 mt-2" />
             <textarea

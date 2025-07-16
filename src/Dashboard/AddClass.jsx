@@ -23,44 +23,44 @@ const AddClass = () => {
   const imgbbApiKey = import.meta.env.VITE_IMGBB_API; // Your API key from env
 
   const onSubmit = async (data) => {
-  if (!data.image || data.image.length === 0) {
-    toast.error("Please select a class image.");
-    return;
-  }
+    if (!data.image || data.image.length === 0) {
+      toast.error("Please select a class image.");
+      return;
+    }
 
-  setUploading(true);
-  try {
-    const imageFile = data.image[0];
+    setUploading(true);
+    try {
+      const imageFile = data.image[0];
 
-    const formData = new FormData();
-    formData.append("image", imageFile);
+      const formData = new FormData();
+      formData.append("image", imageFile);
 
-    const apiKey = import.meta.env.VITE_IMGBB_API;
-    const res = await axios.post(
-      `https://api.imgbb.com/1/upload?key=${apiKey}`,
-      formData
-    );
+      const apiKey = import.meta.env.VITE_IMGBB_API;
+      const res = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${apiKey}`,
+        formData
+      );
 
-    const imageUrl = res.data.data.url;
-    console.log("Uploaded Image URL:", imageUrl);
+      const imageUrl = res.data.data.url;
+      console.log("Uploaded Image URL:", imageUrl);
 
-    const classData = {
-      className: data.className,
-      image: imageUrl,
-      details: data.details,
-      additionalInfo: data.additionalInfo || "",
-    };
+      const classData = {
+        className: data.className,
+        image: imageUrl,
+        details: data.details,
+        additionalInfo: data.additionalInfo || "",
+      };
 
-    await axios.post("http://localhost:3000/api/classes", classData);
-    toast.success("Class added successfully!");
-    reset();
-  } catch (error) {
-    console.error("Error uploading image or adding class:", error);
-    toast.error("Failed to add class.");
-  } finally {
-    setUploading(false);
-  }
-};
+      await axios.post("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/classes", classData);
+      toast.success("Class added successfully!");
+      reset();
+    } catch (error) {
+      console.error("Error uploading image or adding class:", error);
+      toast.error("Failed to add class.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
 
   return (
@@ -145,11 +145,10 @@ const AddClass = () => {
             <button
               type="submit"
               disabled={uploading}
-              className={`bg-blue-600 cursor-pointer text-white flex items-center gap-2 px-6 py-3 rounded-md transition ${
-                uploading
+              className={`bg-blue-600 cursor-pointer text-white flex items-center gap-2 px-6 py-3 rounded-md transition ${uploading
                   ? "opacity-50 cursor-not-allowed"
                   : "hover:bg-blue-700"
-              }`}
+                }`}
             >
               <FaPaperPlane className="text-sm" />
               {uploading ? "Uploading..." : "Add Class"}

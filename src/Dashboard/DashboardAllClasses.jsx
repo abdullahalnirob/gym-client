@@ -7,13 +7,13 @@ import Swal from "sweetalert2";
 
 // Fetch all classes
 const fetchClasses = async () => {
-  const res = await axios.get("http://localhost:3000/api/classes");
+  const res = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/classes");
   return res.data;
 };
 
 // Delete class by ID
 const deleteClass = async (id) => {
-  return await axios.delete(`http://localhost:3000/api/classes/${id}`);
+  return await axios.delete(`https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/classes/${id}`);
 };
 
 // Modal styling

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const fetchTrainers = async () => {
   try {
-    const { data } = await axios.get("http://localhost:3000/api/allusers");
+    const { data } = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers");
     return data.users;
   } catch {
     toast.error("Error loading trainers");

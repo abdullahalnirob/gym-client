@@ -19,7 +19,7 @@ const NewsletterSection = () => {
     }
 
     try {
-      await axios.post("http://localhost:3000/api/newsletter", subscriber);
+      await axios.post("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/newsletter", subscriber);
       toast.success("Subscribed successfully!");
       setSubscriber({ name: "", email: "" });
     } catch (err) {

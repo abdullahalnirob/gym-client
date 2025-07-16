@@ -5,7 +5,7 @@ import { Box, Typography, CircularProgress, Paper } from "@mui/material";
 import useAuth from "../hook/useAuth"; 
 
 const fetchPendingTrainers = async () => {
-  const response = await axios.get("http://localhost:3000/api/activity");
+  const response = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/activity");
   return response.data; // ✅ returns the array of trainers
 };
 

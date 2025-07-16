@@ -5,7 +5,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 
 const fetchAllUsers = async () => {
   try {
-    const res = await axios.get("http://localhost:3000/api/allusers");
+    const res = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers");
     return res.data?.users || [];
   } catch (error) {
     throw new Error("Failed to fetch users");
@@ -30,7 +30,7 @@ const AllTrainers = () => {
   const removeTrainerMutation = useMutation({
     mutationFn: async (id) => {
       const { data } = await axios.patch(
-        `http://localhost:3000/api/users/role-to-user/${id}`
+        `https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/users/role-to-user/${id}`
       );
       return data;
     },
@@ -109,11 +109,10 @@ const AllTrainers = () => {
               <button
                 onClick={() => handleDeleteTrainer(trainer._id)}
                 disabled={removeTrainerMutation.isPending}
-                className={`mt-3 text-xs py-2 px-4 rounded duration-200 transition-colors ${
-                  removeTrainerMutation.isPending
+                className={`mt-3 text-xs py-2 px-4 rounded duration-200 transition-colors ${removeTrainerMutation.isPending
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-red-500 hover:bg-red-600 cursor-pointer"
-                } text-white`}
+                  } text-white`}
               >
                 {removeTrainerMutation.isPending
                   ? "Removing..."

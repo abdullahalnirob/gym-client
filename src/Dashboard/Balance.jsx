@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CircularProgress, Typography, Box } from "@mui/material";
 
 const fetchPaymentHistory = async () => {
-  const response = await axios.get("http://localhost:3000/api/paymenthistory");
+  const response = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/paymenthistory");
   return response.data; // since the API returns an array directly
 };
 

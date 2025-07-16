@@ -70,14 +70,14 @@ const Register = () => {
         console.error("Signup error:", err);
         toast.error("Account creation failed!");
       });
-   axios.post("http://localhost:3000/api/users", {
-  name: data.name,
-  email: data.email,
-  photo: imageUrl,
-  role: "user",
-  experience: null,
-  socials: null,
-});
+    axios.post("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/users", {
+      name: data.name,
+      email: data.email,
+      photo: imageUrl,
+      role: "user",
+      experience: null,
+      socials: null,
+    });
 
   };
 
@@ -88,7 +88,7 @@ const Register = () => {
         const user = result.user;
         setUser(user);
 
-        axios.post("http://localhost:3000/api/users", {
+        axios.post("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/users", {
           name: user.displayName,
           photo: user.photoURL,
           email: user.email,

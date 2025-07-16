@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 // Fetch all users
 const fetchAllUsers = async () => {
-  const response = await axios.get("http://localhost:3000/api/allusers");
+  const response = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers");
   return response.data.users;
 };
 
@@ -49,11 +49,11 @@ const AllUsers = () => {
   };
 
   const handleMakeAdmin = (id) => {
-    axios.patch(`http://localhost:3000/api/user-to-admin/${id}`).then((res) => {
+    axios.patch(`https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/user-to-admin/${id}`).then((res) => {
       toast.success("User made admin");
       console.log(res.data);
       queryClient.invalidateQueries("allUsers");
-    }).catch(()=>{
+    }).catch(() => {
       toast.error("Something went wrong")
     })
 

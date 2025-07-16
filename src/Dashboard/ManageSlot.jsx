@@ -11,7 +11,7 @@ const ManageSlot = () => {
 
     // Fetch all users
     const fetchSlots = async () => {
-        const res = await axios.get("http://localhost:3000/api/allusers");
+        const res = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers");
         return res.data;
     };
 
@@ -51,7 +51,7 @@ const ManageSlot = () => {
         if (!trainer) return toast.error("Trainer not found");
 
         try {
-            await axios.delete(`http://localhost:3000/api/allusers/${trainer._id}/slot`, {
+            await axios.delete(`https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers/${trainer._id}/slot`, {
                 data: { timeSlot: slotToDelete }, // DELETE with body in axios
             });
 

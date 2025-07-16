@@ -89,7 +89,7 @@ const SideBar = () => {
     queryKey: ["allUsers"],
     queryFn: async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/allusers");
+        const res = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers");
         return res.data?.users || [];
       } catch (err) {
         toast.error("Failed to fetch users.");
@@ -113,8 +113,8 @@ const SideBar = () => {
     role === "admin"
       ? AdminMenus
       : role === "trainer"
-      ? TrainerMenus
-      : UserMenus;
+        ? TrainerMenus
+        : UserMenus;
 
   return (
     <>
@@ -126,9 +126,8 @@ const SideBar = () => {
       </button>
 
       <div
-        className={`fixed lg:static top-0 left-0 h-screen w-64 bg-white text-gray-800 p-6 flex flex-col gap-4 shadow-xl transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 z-40`}
+        className={`fixed lg:static top-0 left-0 h-screen w-64 bg-white text-gray-800 p-6 flex flex-col gap-4 shadow-xl transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 z-40`}
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-blue-600">Dashboard</h2>
@@ -151,11 +150,10 @@ const SideBar = () => {
               {({ isActive }) => (
                 <>
                   <div
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group ${
-                      isActive
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group ${isActive
                         ? "bg-blue-100 text-blue-600 font-semibold"
                         : "text-gray-600 hover:bg-blue-50 hover:text-blue-400"
-                    }`}
+                      }`}
                   >
                     <span className="text-lg group-hover:scale-110 transition-transform duration-200">
                       {item.icon}
@@ -164,9 +162,8 @@ const SideBar = () => {
                   </div>
 
                   <span
-                    className={`absolute top-3 left-0 h-6 w-1 bg-blue-400 rounded-r-full transition-opacity duration-200 ${
-                      isActive ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute top-3 left-0 h-6 w-1 bg-blue-400 rounded-r-full transition-opacity duration-200 ${isActive ? "opacity-100" : "opacity-0"
+                      }`}
                   ></span>
                 </>
               )}

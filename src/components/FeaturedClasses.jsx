@@ -3,7 +3,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchFeaturedClasses = async () => {
-  const res = await axios.get("http://localhost:3000/api/classes");
+  const res = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/classes");
   return res.data;
 };
 

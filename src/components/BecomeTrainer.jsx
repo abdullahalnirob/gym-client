@@ -119,7 +119,7 @@ const BecomeTrainer = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/pendingtrainer",
+        "https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/pendingtrainer",
         formattedData
       );
 
@@ -129,7 +129,7 @@ const BecomeTrainer = () => {
           role: "user",
           status: "pending",
         };
-        await axios.post("http://localhost:3000/api/activity", activityData);
+        await axios.post("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/activity", activityData);
         toast.success("Trainer Application Submitted Successfully");
         reset();
       } else {

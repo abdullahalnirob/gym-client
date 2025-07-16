@@ -18,7 +18,7 @@ const getClassArray = (classInfo) => {
 
 // Fetch bookings
 const fetchPaymentHistory = async () => {
-  const response = await axios.get("http://localhost:3000/api/paymenthistory");
+  const response = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/paymenthistory");
   return response.data;
 };
 
@@ -113,11 +113,10 @@ const BookedTrainer = () => {
                       </td>
                       <td className="px-4 py-3 text-sm">
                         <span
-                          className={`inline-block px-2 py-1 rounded text-white text-xs font-medium ${
-                            booking.status === "paid"
+                          className={`inline-block px-2 py-1 rounded text-white text-xs font-medium ${booking.status === "paid"
                               ? "bg-green-500"
                               : "bg-red-500"
-                          }`}
+                            }`}
                         >
                           {booking.status}
                         </span>

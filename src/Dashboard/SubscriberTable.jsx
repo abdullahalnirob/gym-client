@@ -9,7 +9,7 @@ const SubscriberTable = () => {
   useEffect(() => {
     const fetchSubscribers = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/newsletter");
+        const res = await axios.get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/newsletter");
         setSubscribers(res.data);
         setError(null);
       } catch (err) {
