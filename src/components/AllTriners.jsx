@@ -19,7 +19,11 @@ const fetchTrainers = async () => {
 const AllTriners = () => {
   const navigate = useNavigate();
 
-  const { data: users = [], isLoading, isError } = useQuery({
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["allTrainers"],
     queryFn: fetchTrainers,
   });
@@ -45,7 +49,7 @@ const AllTriners = () => {
     );
 
   return (
-    <div className="pb-20 px-10 lexend">
+    <div className="pb-20 px-10 lexend min-h-screen">
       <h1 className="text-4xl mt-3 text-[#1f2933] font-bold text-center">
         All Trainers
       </h1>
@@ -61,7 +65,8 @@ const AllTriners = () => {
               Trainer not found ready to Share Your Expertise?
             </h2>
             <p className="text-blue-100 mb-4">
-              Join our community of professional trainers and help others achieve their fitness goals
+              Join our community of professional trainers and help others
+              achieve their fitness goals
             </p>
             <button
               onClick={handleBecomeTrainer}

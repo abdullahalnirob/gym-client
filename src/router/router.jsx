@@ -27,6 +27,8 @@ import Balance from "../Dashboard/Balance";
 import Profile from "../Dashboard/Profile";
 import Activity from "../Dashboard/Activity";
 import BookedTrainer from "../Dashboard/BookedTrainer";
+import SubscriberTable from "../Dashboard/SubscriberTable";
+import Root from "../Dashboard/Root";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -96,6 +98,10 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "/dashboard",
+        element:<Root/>
+      },
+      {
         path: "/dashboard/applied-trainers",
         element: (
           <PrivateRoute>
@@ -151,6 +157,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <AdminRoute>
               <DashboardAllClasses />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/newsletter",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <SubscriberTable />
             </AdminRoute>
           </PrivateRoute>
         ),
