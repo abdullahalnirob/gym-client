@@ -60,7 +60,6 @@ const AddSlot = () => {
   const [id, setId] = useState(null);
   const { user } = useAuth();
 
-  // Fetch trainer ID
   useEffect(() => {
     axios
       .get("https://server-7skmkpztr-abdullah-al-nirobs-projects.vercel.app/api/allusers")
@@ -84,7 +83,6 @@ const AddSlot = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  // Submit form to add slot
   const onSubmit = async (data) => {
     const selectedSlot = data.timeSlot.value;
 
@@ -97,7 +95,6 @@ const AddSlot = () => {
     } catch (error) {
       console.error("Error adding slot:", error);
 
-      // Safely get the error message from the server
       const message =
         error.response?.data?.message || "Something went wrong. Please try again.";
 
